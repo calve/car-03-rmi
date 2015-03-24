@@ -1,6 +1,10 @@
 package main;
 
+import java.rmi.Naming;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.RemoteRef;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -10,16 +14,14 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 	protected int pere;
 	protected SiteImpl[] fils;
 
-	protected SiteImpl(RemoteRef ref) throws RemoteException {
+	protected SiteImpl() throws RemoteException {
 		super();
-		this.ref  = ref;
 		this.pere = -1;
 		this.fils = null;
 	}
 
-	protected SiteImpl(RemoteRef ref, int pere, SiteImpl[] fils) throws RemoteException {
+	protected SiteImpl(int pere, SiteImpl[] fils) throws RemoteException {
 		super();
-		this.ref  = ref;
 		this.pere = pere;
 		this.fils = fils;
 	}
@@ -46,15 +48,20 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 	 */
 	public static void main(String[] args) {
 		boolean has_father = false;
-		int father;
+		int father = -1;
 		if (args.length > 0){
 			has_father = true;
 			father = Integer.parseInt(args[0]);
 			System.out.println("father : "+father);
 		}
 		try {
-			SiteImpl siteImpl = (SiteImpl) new SiteImpl(null);
+			Registry registry = LocateRegistry.getRegistry();
+			SiteImpl siteImpl = (SiteImpl) new SiteImpl();
+			registry.bind("node-"+father, siteImpl);
 			System.out.println("Running");
+			System.out.println("Try to contact root");
+			SiteItf alice = (SiteItf) registry.lookup("root");
+			alice.sendMessage("hello, message".getBytes(), null);
 		}
 		catch (Exception e) {
 			System.out.println("Something bad happend");
