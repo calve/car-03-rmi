@@ -15,22 +15,28 @@ public class Root implements SiteItf{
 
 	public Root(){
 	}
+
 	public int sendMessage(byte[] message, RemoteRef initiateur){return -1;}
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		try {
-			Registry registry = LocateRegistry.getRegistry();
+			Root root = new Root();
+			SiteItf stub = (SiteItf) UnicastRemoteObject.exportObject(root, 0);
+			Registry registry = LocateRegistry.createRegistry(2048);
+			registry.bind("root", stub);
+			System.out.println("Root started");
 		}
-		catch (RemoteException e){
+		catch (Exception e){
+			System.out.println("Exception occured, sorry");
+			e.printStackTrace();
 		}
+		System.out.println("Never forget ?");
 		/* exec ("java siteimpl  null  null")*/
 		/* exec ("java siteimpl  1")*/
 		/* exec ("java siteimpl  1")*/
 		/* exec ("java siteimpl  2 3 4 5")*/
-
-
 	}
 
 
