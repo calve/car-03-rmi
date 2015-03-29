@@ -1,11 +1,11 @@
 package main;
 
-import java.rmi.registry.Registry;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.RemoteException;
-import java.rmi.Naming;
-import java.rmi.server.UnicastRemoteObject;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.RemoteRef;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 /**
  * Creation de la structure de l'arbre avec les objets RMI utilisation de
@@ -43,6 +43,42 @@ public class Root implements SiteItf{
 		/* exec ("java siteimpl  1")*/
 		/* exec ("java siteimpl  1")*/
 		/* exec ("java siteimpl  2 3 4 5")*/
+	}
+
+	@Override
+	public String getId() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SiteItf> getFathers() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SiteItf> getSons() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addFather(SiteItf father) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addSon(SiteItf son) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int sendMessage(byte[] message) throws RemoteException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
