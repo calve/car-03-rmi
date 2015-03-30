@@ -87,8 +87,8 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 			e.printStackTrace();
 		}
 
-		/* Lire l'id du pÃšre dans args */
-		/* RÃ©cupÃšre une instance du pÃšre auprÃšs de RMIregistry */
+		/* Lire l'id du père dans args */
+		/* Récupère une instance du père auprès de RMIregistry */
 		/* new SiteImpl(? id_pere) */
 		/* while (true) ? */
 		
