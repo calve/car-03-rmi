@@ -7,6 +7,7 @@ import java.rmi.server.RemoteRef;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 
@@ -51,7 +52,6 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 	public int sendMessage(byte[] message) throws RemoteException {
 
 		int result = 0;
-		System.out.println("Here is "+this.id+" got message : ");
 		try {
 			System.out.write(message);
 		}
@@ -96,9 +96,20 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 				father.addSon(siteImpl);
 			}
 			System.out.println("root found, sending message");
-			byte[] message = ("hello, message from " + id + "\n").getBytes();
+			byte[] message = (id + " is connected \n").getBytes();
 			root.sendMessage(message);
-			System.out.println("message transmission ended");
+			int count = 0;
+			while (true){
+				siteImpl.sendMessage((("Message " + count + " from "+ id + "\n").getBytes()));
+				count++;
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					//java, im tired of your exceptions
+					System.out.println("messages transmission ended");
+				}
+			}
+
 		} catch (Exception e) {
 			System.out.println("Something bad happend");
 			e.printStackTrace();
