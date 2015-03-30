@@ -6,6 +6,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.RemoteRef;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.io.IOException;
 
 /**
  * Creation de la structure de l'arbre avec les objets RMI utilisation de
@@ -17,8 +18,13 @@ public class Root implements SiteItf{
 	public Root(){
 	}
 
-	public int sendMessage(byte[] message, RemoteRef initiateur){
-		System.out.println(message.toString());
+	public int sendMessage(byte[] message){
+		try {
+			System.out.write(message);
+		}
+		catch (IOException e){
+			System.out.println("message received, but cannot print it");
+		}
 		return -1;
 	}
 	/**
@@ -74,12 +80,5 @@ public class Root implements SiteItf{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public int sendMessage(byte[] message) throws RemoteException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 
 }

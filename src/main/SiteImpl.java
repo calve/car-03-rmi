@@ -50,6 +50,13 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 	public int sendMessage(byte[] message) throws RemoteException {
 
 		int result = 0;
+		System.out.println("Here is "+this.id+" got message : ");
+		try {
+			System.out.write(message);
+		}
+		catch (IOException e){
+			System.out.println("message received, but cannot print it");
+		}
 		for (SiteItf son : this.listSons) {
 			if (son.equals(null)) {
 				System.out.println("DEBUG [" + this.id + "] : Plus de fils");
