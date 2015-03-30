@@ -87,15 +87,15 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 			e.printStackTrace();
 		}
 
-		/* Lire l'id du père dans args */
-		/* Récupère une instance du père auprès de RMIregistry */
+		/* Lire l'id du pÃšre dans args */
+		/* RÃ©cupÃšre une instance du pÃšre auprÃšs de RMIregistry */
 		/* new SiteImpl(? id_pere) */
 		/* while (true) ? */
 		
-		/* Recherche de l'instance aupr�s du registry dans Tree.java
-		 * Dans cette classe, cr�ation du noeud de l'arbre.
-		 * Sera utiliser dans un .sh pour cr�er des noeuds et les lier 
-		 * ensemble gr�ce au main de Tree.
+		/* Recherche de l'instance auprès du registry dans Tree.java
+		 * Dans cette classe, création du noeud de l'arbre.
+		 * Sera utiliser dans un .sh pour créer des noeuds et les lier 
+		 * ensemble grâce au main de Tree.
 		 * 
 		 * */
 	}

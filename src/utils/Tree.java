@@ -6,8 +6,8 @@ import java.rmi.registry.Registry;
 import main.SiteItf;
 
 /**
- * Une classe utile pour créer un lien de parenté entre un idFather et un idSon.
- * D'après ces ids, on recherche auprès du serveur les instances des noeuds
+ * Une classe utile pour crÃ©er un lien de parentÃ© entre un idFather et un idSon.
+ * D'aprÃ¨s ces ids, on recherche auprÃ¨s du serveur les instances des noeuds
  * SiteItf.
  */
 public class Tree {
@@ -16,7 +16,7 @@ public class Tree {
 		String idFather = null;
 		String idSon = null;
 
-		/* Définition des arguments */
+		/* DÃ©finition des arguments */
 		if (args.length != 2) {
 			System.out.println("Args : IdFather IdSon");
 		} else {
@@ -27,10 +27,10 @@ public class Tree {
 			Registry registry;
 			try {
 				registry = LocateRegistry.getRegistry();
-				// On récupère les instances
+				// On rÃ©cupÃ¨re les instances
 				SiteItf father = (SiteItf) registry.lookup(idFather);
 				SiteItf son = (SiteItf) registry.lookup(idSon);
-				// On ajoute le lien de parenté
+				// On ajoute le lien de parentÃ©
 				father.addSon(son);
 				System.out.println("A tree link between " + idFather + " and "
 						+ idSon + " have been created.");
