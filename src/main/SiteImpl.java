@@ -7,7 +7,8 @@ import java.rmi.server.RemoteRef;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 
@@ -53,7 +54,10 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 
 		int result = 0;
 		try {
+			System.out.printf("\r");
+			System.out.printf("RECEIVED : ");
 			System.out.write(message);
+			System.out.printf("\n");
 		}
 		catch (IOException e){
 			System.out.println("message received, but cannot print it");
@@ -98,16 +102,11 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 			System.out.println("root found, sending message");
 			byte[] message = (id + " is connected \n").getBytes();
 			root.sendMessage(message);
-			int count = 0;
 			while (true){
-				siteImpl.sendMessage((("Message " + count + " from "+ id + "\n").getBytes()));
-				count++;
-				try {
-					TimeUnit.SECONDS.sleep(1);
-				} catch (InterruptedException e) {
-					//java, im tired of your exceptions
-					System.out.println("messages transmission ended");
-				}
+				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+				System.out.printf("Message : ");
+				String input = br.readLine();
+				siteImpl.sendMessage(input.getBytes());
 			}
 
 		} catch (Exception e) {
