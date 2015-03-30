@@ -6,6 +6,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.RemoteRef;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.io.IOException;
 
 public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 
@@ -75,20 +76,29 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 	 */
 	public static void main(String[] args) {
 		boolean has_father = false;
-		int father = -1;
-		if (args.length > 0) {
-			has_father = true;
-			father = Integer.parseInt(args[0]);
-			System.out.println("father : " + father);
+		if (args.length < 1) {
+			System.out.println("usage : java main.SiteImpl <id> [father-id]");
 		}
 		try {
+			String id = args[0];
 			Registry registry = LocateRegistry.getRegistry();
-			SiteImpl siteImpl = (SiteImpl) new SiteImpl("First");
-			registry.bind("node-" + father, siteImpl);
+			SiteImpl siteImpl = (SiteImpl) new SiteImpl(id);
+			registry.bind(id, siteImpl);
 			System.out.println("Running");
 			System.out.println("Try to contact root");
-			SiteItf alice = (SiteItf) registry.lookup("root");
-			alice.sendMessage("hello, message".getBytes());
+			SiteItf root = (SiteItf) registry.lookup("root");
+			if (args.length >= 2) {
+				/* This one has a father ! */
+				has_father = true;
+				String father_id = args[1];
+				SiteItf father = (SiteItf) registry.lookup(father_id);
+				System.out.println("found father : " + father_id);
+				father.addSon(siteImpl);
+			}
+			System.out.println("root found, sending message");
+			byte[] message = ("hello, message from " + id + "\n").getBytes();
+			root.sendMessage(message);
+			System.out.println("message transmission ended");
 		} catch (Exception e) {
 			System.out.println("Something bad happend");
 			e.printStackTrace();
