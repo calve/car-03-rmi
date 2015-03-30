@@ -17,7 +17,7 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 	protected ArrayList<SiteItf> listFathers;
 	protected ArrayList<SiteItf> listSons;
 
-	protected SiteImpl(String id) throws RemoteException {
+	public SiteImpl(String id) throws RemoteException {
 		super();
 		this.id = id;
 		this.listFathers = new ArrayList<SiteItf>();
@@ -66,7 +66,7 @@ public class SiteImpl extends UnicastRemoteObject implements SiteItf {
 			if (son.equals(null)) {
 				System.out.println("DEBUG [" + this.id + "] : Plus de fils");
 			} else { // propagation a tous les fils
-				System.out.println("DEBUG [" + this.ref
+				System.out.println("DEBUG [" + this.id
 						+ "] : Propagation du message au fils [" + son.getId()
 						+ "]");
 				result += son.sendMessage(message);
