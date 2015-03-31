@@ -17,3 +17,15 @@ Usage
   7. See how message propagate in the tree !
 
 Each command is expected to run in it's own terminal, and should not terminate
+
+UML
+---
+
+    +-------+           +------+
+    |SiteItf|   <-----  | Root |
+    +-------+           +------+
+        ^
+        |
+    +--------+
+    |SiteImpl|
+    +--------+
